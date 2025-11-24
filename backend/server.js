@@ -46,21 +46,19 @@ app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'Server is running' });
 });
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: 'Route not found' });
-});
-
-// Error handling middleware
 app.use((err, req, res, next) => {
-  console.error('Error:', err);
+  console.error("Error:", err);
   res.status(500).json({
     success: false,
-    message: 'Internal server error',
-    error: process.env.NODE_ENV === 'development' ? err.message : undefined,
+    message: "Internal server error",
+    error: process.env.NODE_ENV === "development" ? err.message : undefined,
   });
 });
 
+// 404 handler must be LAST
+app.use((req, res) => {
+  res.status(404).json({ success: false, message: "Route not found" });
+});
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
