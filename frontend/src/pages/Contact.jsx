@@ -16,6 +16,14 @@ export default function Contact() {
     // Use your backend URL - adjust if needed
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
+    const validateName = (name) => {
+        const nameRegex = /^[A-Za-z\s]+$/;
+        if (!nameRegex.test(name) && name !== '') {
+            return 'Name should contain only letters';
+        }
+        return '';
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -28,6 +36,13 @@ export default function Contact() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        // Validate name
+        const nameError = validateName(formData.name);
+        if (nameError) {
+            setError(nameError);
+            return;
+        }
+
         // Simple validation
         if (!formData.name || !formData.email || !formData.message) {
             setError('Please fill all required fields');
@@ -142,6 +157,12 @@ export default function Contact() {
                                 placeholder="Your name"
                                 disabled={loading}
                                 required
+                                onKeyPress={(e) => {
+                                    // Prevent typing numbers
+                                    if (/\d/.test(e.key)) {
+                                        e.preventDefault();
+                                    }
+                                }}
                             />
                         </div>
 
@@ -216,13 +237,50 @@ export default function Contact() {
                 </div>
             </div>
 
-            {/* Rest of your existing components */}
-            {/* ... */}
+            {/* FAQ Section */}
+            <div className="bg-gradient-to-br from-teal-50 to-cyan-50 py-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-4xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
+
+                    <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        <FAQItem
+                            question="How quickly will you respond?"
+                            answer="We aim to respond to all inquiries within 24 hours during business days."
+                        />
+                        <FAQItem
+                            question="What are your support hours?"
+                            answer="Our 24/7 support team is available at all times to assist you."
+                        />
+                        <FAQItem
+                            question="Can I schedule a demo?"
+                            answer="Yes! Contact our team and we'll be happy to set up a personalized demo for you."
+                        />
+                        <FAQItem
+                            question="Do you offer enterprise solutions?"
+                            answer="Absolutely! We have customized enterprise packages available. Contact our sales team."
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* CTA Section */}
+            <div className="bg-gradient-to-br from-teal-400 via-teal-500 to-cyan-600 text-white py-20">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                        Still have questions?
+                    </h2>
+                    <p className="text-xl mb-10 opacity-90">
+                        Check out our help center or reach out to our support team
+                    </p>
+                    <button className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-lg font-semibold transition text-lg">
+                        Visit Help Center
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }
 
-// Helper components (keep as is)
 function ContactInfoCard({ icon, title, content, color }) {
     return (
         <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all text-center">
@@ -236,7 +294,7 @@ function ContactInfoCard({ icon, title, content, color }) {
 }
 
 function FAQItem({ question, answer }) {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <div className="bg-white p-6 rounded-lg">
