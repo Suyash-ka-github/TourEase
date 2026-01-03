@@ -67,7 +67,10 @@ export default function AddFavorite() {
 function DestinationCard({ destination, isFavorite, onToggleFavorite }) {
   return (
     <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm dark:shadow-lg hover:shadow-xl dark:hover:shadow-xl transition-all overflow-hidden group cursor-pointer border border-transparent dark:border-gray-800">
-      <div className={`${destination.image} h-48 relative overflow-hidden`}>
+      <div
+        className="h-48 relative overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: `url(${destination.image})` }}
+      >
         <div className="absolute inset-0 bg-black opacity-20 group-hover:opacity-30 dark:opacity-40 dark:group-hover:opacity-50 transition" />
         <button
           onClick={onToggleFavorite}
