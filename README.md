@@ -153,15 +153,21 @@ Our mission is to make travel **personalized**, **safe**, and **immersive** for 
    **Backend `.env`:**
    
    PORT=5000
-   MONGODB_URI=your_mongodb_connection_string
+   MONGODB_URL=MONGODB_URI
    JWT_SECRET=your_jwt_secret
    OPENAI_API_KEY=your_openai_api_key
    MAPBOX_ACCESS_TOKEN=your_mapbox_token
+   CLIENT_URL=http://localhost:5173
+
+   // For Google OAuth
+   GOOGLE_CLIENT_ID=CLIENT_ID
+   GOOGLE_CLIENT_SECRET=SECRET_KEY
+   GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
    
    
    **Frontend `.env`:**
   
-   REACT_APP_API_URL=http://localhost:5000
+   VITE_API_URL=http://localhost:5000/api
    REACT_APP_MAPBOX_TOKEN=your_mapbox_token
   
 
