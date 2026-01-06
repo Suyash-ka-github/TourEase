@@ -1,3 +1,4 @@
+import Loader from './components/common/Loader';
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -68,6 +69,20 @@ function AppRoutes() {
 }
 
 export default function App() {
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    // This simulates the app "loading" data for 2 seconds
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+  
   return (
     <FavoritesProvider>
       <Router>
